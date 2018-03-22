@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Android1-Practical-Project-Yev</string>
+    <string name="insert_note">Insert Note</string>
+    <string name="add_a_note">Add a note</string>
+    <string name="take_your_notes">Take your Notes!</string>
+    <string name="text_snippet">Text Snippet</string>
+    <string name="task">Task</string>
+    <string name="photo_snippet">Photo Snippet</string>
+    <string name="cancel">CANCEL</string>
+    <string name="enter_note">Enter your note</string>
+    <string name="submit_note">Submit Note</string>
+</resources>
