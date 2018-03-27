@@ -9,4 +9,5 @@
     <string name="cancel">CANCEL</string>
     <string name="enter_note">Enter your note</string>
     <string name="submit_note">Submit Note</string>
+    <string name="note_taker">Note Taker</string>
 </resources>

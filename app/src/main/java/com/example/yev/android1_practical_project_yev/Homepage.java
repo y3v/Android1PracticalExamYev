@@ -2,6 +2,7 @@ package com.example.yev.android1_practical_project_yev;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,9 @@ public class Homepage extends AppCompatActivity {
     Button addNote;
     ArrayList<String> notes = new ArrayList<>();
 
+    //Database
+    DatabaseHelper myDb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,20 @@ public class Homepage extends AppCompatActivity {
         //Get view Elements
         listView = findViewById(R.id.listviewNotes);
         addNote = findViewById(R.id.buttonAddNote);
+
+        //DB Instantiation
+        myDb = new DatabaseHelper(this);
+
+        listView.setAdapter(new CustomAdapter(this, R.layout.custom_list_row, notes));
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> av, View v, int position, long id) {
+                Log.d("LIST ITEM", "CLICKED!!!!!!!!!!!!!!!!!!!!");
+            }
+        });
+
+        viewAll();
 
 
         Log.d("ARRAYLIST SIZE:::", notes.size() + "");
@@ -94,6 +112,7 @@ public class Homepage extends AppCompatActivity {
                 String note = data.getStringExtra("note");
                 Log.d("NOTE IN HOMEPAGE:::", note);
                 notes.add(note);
+                myDb.insertNote(note);
             }
             if (resultCode == Activity.RESULT_CANCELED) {
                 Log.d("NOTE:::", "EMPTY");
@@ -105,10 +124,7 @@ public class Homepage extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                this, android.R.layout.simple_list_item_1, notes );
-
-        listView.setAdapter(adapter);
+        listView.setAdapter(new CustomAdapter(this, R.layout.custom_list_row, notes));
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,5 +132,17 @@ public class Homepage extends AppCompatActivity {
                 Log.d("LIST ITEM", "CLICKED!!!!!!!!!!!!!!!!!!!!");
             }
         });
+    }
+
+    private void viewAll(){
+        Cursor res = myDb.getAllData();
+        if (res.getCount() == 0){
+            Log.d("DATABASE::::", "FRESH PAGE");
+        }
+        else{
+            while(res.moveToNext()){
+                notes.add(res.getString(1));
+            }
+        }
     }
 }
