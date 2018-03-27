@@ -31,7 +31,9 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="@string/add_a_note"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"/>
 
         <ListView
             android:id="@+id/listviewNotes"
